@@ -33,34 +33,56 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import {
-  Add,
-  Edit,
-  EditOff,
-  ReduceCapacity,
-  Remove,
-} from "@mui/icons-material";
+import { Add, Edit, Remove } from "@mui/icons-material";
 import AddItem from "../modals/AddItem";
 import axios from "axios";
 import { linkApi } from "../service/linkApi";
 import EditItem from "../modals/EditItem";
 
 const TableDataItem = ({
-  data,
   dataClicked,
   removeDataClicked,
   dataUnitType,
   unitTypeFromApi,
 }) => {
-  const [dataFromApi, setDataFromApi] = useState([]);
+  const [dataItemFromApi, setDataItemFromApi] = useState([]);
   const [dataToModalEdit, setDataToModalEdit] = useState({});
+  const [trigger, setTrigger] = useState(false);
+
+  const removeButtonValidator = (dataRow) => {
+    const dataLocalStorage = JSON.parse(
+      localStorage.getItem("dataTransaction") || "[]"
+    );
+    if (dataLocalStorage.find((e) => e.uuid === dataRow.uuid)) {
+      const amount = dataLocalStorage.find(
+        (e) => e.uuid === dataRow.uuid
+      ).itemAmount;
+      if (amount <= 0 || undefined || null) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const handleTrigger = (childData) => {
+    setTrigger(childData);
+  };
 
   useEffect(() => {
     axios
-      .get(`${linkApi}api/unittype`)
-      .then((res) => setDataFromApi(res.data.data))
-      .catch((err) => console.log("Error get Unit Type", err));
-  }, []);
+      .get(`${linkApi}api/getallitem`)
+      .then((res) => {
+        setDataItemFromApi(res.data.data);
+        // console.log("Success get all data", res);
+      })
+      .catch((err) => {
+        console.log("Error get all data", err);
+      });
+  }, [trigger]);
+
   const [inputItemName, setInputItemName] = useState(dataToModalEdit.itemName);
   const [inputItemPrice, setInputItemPrice] = useState(
     dataToModalEdit.itemPrice
@@ -76,6 +98,7 @@ const TableDataItem = ({
     setInputItemPrice(row.itemPrice);
     setInputItemQuantity(row.itemQty);
     setInputItemInfo(row.itemName);
+    setSatuan(row.unitTypeId);
     setOpen(true);
   };
   const handleClose = () => {
@@ -147,7 +170,7 @@ const TableDataItem = ({
   }
 
   //modified rows with imported data:
-  const rows = data.map((e) =>
+  const rows = dataItemFromApi.map((e) =>
     createData(e.uuid, e.itemName, e.itemPrice, e.itemQty, e.unitTypeId)
   );
 
@@ -441,13 +464,12 @@ const TableDataItem = ({
           </div>
           {/* searchbar  */}
           <div>
-            <AddItem dataUnitType={dataUnitType} />
+            <AddItem
+              dataUnitType={dataUnitType}
+              trigger={trigger}
+              setTrigger={handleTrigger}
+            />
           </div>
-          <EditItem
-            dataUnitType={unitTypeFromApi}
-            openFromParent={open}
-            dataToModalEdit={dataToModalEdit}
-          />
         </div>
         <Box>
           <Paper>
@@ -516,7 +538,7 @@ const TableDataItem = ({
                               }}>
                               <section>
                                 {
-                                  dataFromApi.find(
+                                  dataUnitType.find(
                                     (e) => e.id === row.unitTypeId
                                   ).unitType
                                 }
@@ -532,7 +554,7 @@ const TableDataItem = ({
                               <Add fontSize='small' />
                             </IconButton>
                             <IconButton
-                              disabled={false}
+                              disabled={removeButtonValidator(row)}
                               color='primary'
                               aria-label='upload picture'
                               component='label'
@@ -622,7 +644,7 @@ const TableDataItem = ({
                     value={satuan}
                     label='Satuan'
                     onChange={handleChange}>
-                    {dataFromApi.map((e) => (
+                    {dataUnitType.map((e) => (
                       <MenuItem key={e.id} value={e.id}>
                         {e.unitType}
                       </MenuItem>

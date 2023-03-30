@@ -34,6 +34,8 @@ const PayItem = ({ dataTransaction, subtotal }) => {
       });
   }, []);
 
+  const valid = inputPay.length > 0 && inputPaymentType !== "" && (parseInt(inputPay.replace(/\./g, ""), 10) - subtotal) >=0
+
   const handleTransaction = (e) => {
     e.preventDefault();
     const transactionDetail = dataTransaction.map((e) => {
@@ -127,7 +129,6 @@ const PayItem = ({ dataTransaction, subtotal }) => {
                     labelId='demo-select-small'
                     id='demo-select-small'
                     value={inputPaymentType}
-                    defaultValue=''
                     label='Payment Method'
                     onChange={handleChange}>
                     {paymentType.map((e) => (
@@ -170,6 +171,7 @@ const PayItem = ({ dataTransaction, subtotal }) => {
                 <Button
                   variant='contained'
                   sx={{ m: 1 }}
+                  disabled = {!valid}
                   onClick={handleTransaction}>
                   Pay
                 </Button>

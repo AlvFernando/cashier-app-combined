@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import ClickOutside from "./ClickOutside";
+import {
+  Add,
+  Edit,
+  History,
+  Home,
+  Key,
+  Remove,
+  Settings,
+} from "@mui/icons-material";
 
 // Be sure to include styles at some point, probably during your bootstraping
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
@@ -32,24 +41,27 @@ const Sidenav = ({ childToParent }) => {
           <SideNav.Nav defaultSelected='home'>
             <NavItem eventKey='home'>
               <NavIcon>
-                <i
-                  className='fa fa-fw fa-home'
-                  style={{ fontSize: "1.75em" }}
-                />
+                <Home sx={{marginTop: "12px"}}/>
               </NavIcon>
               <NavText>Home</NavText>
             </NavItem>
             <NavItem eventKey='history'>
               <NavIcon>
-                <i className='fa fa-history' style={{ fontSize: "1.75em" }} />
+                <History sx={{marginTop: "12px"}}/>
               </NavIcon>
               <NavText>History Transaction</NavText>
             </NavItem>
             <NavItem eventKey='settings'>
               <NavIcon>
-                <i className='fa fa-cog' style={{ fontSize: "1.75em" }} />
+                <Settings sx={{marginTop: "12px"}}/>
               </NavIcon>
               <NavText>Settings</NavText>
+            </NavItem>
+            <NavItem eventKey='activation'>
+              <NavIcon>
+                <Key sx={{marginTop: "12px"}}/>
+              </NavIcon>
+              <NavText>Activate Product</NavText>
             </NavItem>
           </SideNav.Nav>
         </SideNav>

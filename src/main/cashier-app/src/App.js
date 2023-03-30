@@ -4,6 +4,7 @@ import Home from "./page/Home";
 import Sidenav from "./components/Sidenav";
 import TransactionHistory from "./page/TransactionHistory";
 import Settings from "./page/Settings";
+import Activation from "./page/Activation";
 
 function App() {
   const [expand, setExpand] = useState(false);
@@ -32,6 +33,7 @@ function App() {
             <Route path='/home' element={<Home />}></Route>
             <Route path='/settings' element={<Settings />}></Route>
             <Route path='/history' element={<TransactionHistory />}></Route>
+            <Route path='/activation' element={<Activation />}></Route>
           </Routes>
         </div>
       </div>

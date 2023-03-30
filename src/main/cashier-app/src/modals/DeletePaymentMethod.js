@@ -4,14 +4,12 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
-import {
-  IconButton,
-} from "@mui/material";
+import { IconButton } from "@mui/material";
 import axios from "axios";
 import { linkApi } from "../service/linkApi";
 import { Delete } from "@mui/icons-material";
 
-const DeletePaymentMethod = ({ methodClicked }) => {
+const DeletePaymentMethod = ({ methodClicked, trigger, setTrigger }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -25,6 +23,7 @@ const DeletePaymentMethod = ({ methodClicked }) => {
         },
       })
       .then(() => {
+        setTrigger(!trigger);
         handleClose();
         alert(
           `Succesfully Delete payment method ${methodClicked.paymentMethod}`

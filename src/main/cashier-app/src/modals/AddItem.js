@@ -15,7 +15,7 @@ import {
 import axios from "axios";
 import { linkApi } from "../service/linkApi";
 
-const AddItem = ({dataUnitType}) => {
+const AddItem = ({ dataUnitType, trigger, setTrigger }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -35,6 +35,7 @@ const AddItem = ({dataUnitType}) => {
       })
       .then((res) => {
         console.log("Success Post New Item", res);
+        setTrigger(!trigger);
         handleClose();
       })
       .catch((err) => console.log("Error Post New Item", err));
@@ -61,7 +62,9 @@ const AddItem = ({dataUnitType}) => {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>+ Add New Item</Button>
+      <Button variant='contained' onClick={handleOpen}>
+        + Add New Item
+      </Button>
       <Modal
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
@@ -102,7 +105,7 @@ const AddItem = ({dataUnitType}) => {
                     labelId='demo-select-small'
                     id='demo-select-small'
                     value={satuan}
-                    defaultValue=""
+                    defaultValue=''
                     label='Satuan'
                     onChange={handleChange}>
                     {dataUnitType.map((e) => (

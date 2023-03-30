@@ -11,11 +11,9 @@ import { linkApi } from "../service/linkApi";
 import PayItem from "../modals/PayItem";
 
 const Home = () => {
-  const [dataFromApi, setDataFromApi] = useState([]);
   const [unitTypeFromApi, setUnitTypeFromApi] = useState([]);
 
   const childToParent = (childData) => {
-    // setDataClicked(childData);
     handleAddItem(childData);
   };
 
@@ -24,16 +22,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`${linkApi}api/getallitem`)
-      .then((res) => {
-        setDataFromApi(res.data.data);
-        // console.log("Success get all data", res);
-      })
-      .catch((err) => {
-        console.log("Error get all data", err);
-      });
-
     axios
       .get(`${linkApi}api/unittype`)
       .then((res) => setUnitTypeFromApi(res.data.data))
@@ -46,6 +34,14 @@ const Home = () => {
     dataTransaction.reduce((e, { itemPrice }) => e + itemPrice, 0)
   );
 
+  const dataLocalStorage = JSON.parse(
+    localStorage.getItem("dataTransaction") || "[]"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("dataTransaction", "[]")
+  }, []);
+
   const handleAddItem = (childData) => {
     if (dataTransaction.find((e) => e.uuid === childData.uuid)) {
       let objIndex = dataTransaction.findIndex(
@@ -53,6 +49,7 @@ const Home = () => {
       );
       dataTransaction[objIndex].itemAmount += 1;
       setDataTransaction(dataTransaction);
+      localStorage.setItem("dataTransaction", JSON.stringify(dataTransaction));
     } else {
       setDataTransaction([
         ...dataTransaction,
@@ -63,11 +60,21 @@ const Home = () => {
           itemAmount: 1,
         },
       ]);
+      localStorage.setItem(
+        "dataTransaction",
+        JSON.stringify([
+          ...dataTransaction,
+          {
+            uuid: childData.uuid,
+            itemName: childData.itemName,
+            itemPrice: childData.itemPrice,
+            itemAmount: 1,
+          },
+        ])
+      );
     }
     setSubtotal(subtotal + childData.itemPrice);
   };
-
-  console.log(dataTransaction)
 
   const handleRemoveItem = (childData) => {
     if (dataTransaction.find((e) => e.uuid === childData.uuid)) {
@@ -76,6 +83,7 @@ const Home = () => {
       );
       dataTransaction[objIndex].itemAmount -= 1;
       setDataTransaction(dataTransaction);
+      localStorage.setItem("dataTransaction", JSON.stringify(dataTransaction));
     } else {
       setDataTransaction([
         ...dataTransaction,
@@ -86,6 +94,18 @@ const Home = () => {
           itemAmount: 1,
         },
       ]);
+      localStorage.setItem(
+        "dataTransaction",
+        JSON.stringify([
+          ...dataTransaction,
+          {
+            uuid: childData.uuid,
+            itemName: childData.itemName,
+            itemPrice: childData.itemPrice,
+            itemAmount: 1,
+          },
+        ])
+      );
     }
     setSubtotal(subtotal - childData.itemPrice);
   };
@@ -93,55 +113,63 @@ const Home = () => {
   const handleDeleteItem = (e, priceDrop, itemAmount) => {
     // console.log("delete this with UUID: ", e);
     setDataTransaction(dataTransaction.filter((f) => f.uuid !== e));
+    localStorage.setItem(
+      "dataTransaction",
+      JSON.stringify(dataTransaction.filter((f) => f.uuid !== e))
+    );
     setSubtotal(subtotal - priceDrop * itemAmount);
   };
 
   const ShoppingCart = () => {
     return (
       <>
-        {dataTransaction.map((e, index) => {
-          return (
-            <div
-              key={index}
-              className='flex-row'
-              style={{ justifyContent: "center" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  p: 2,
-                  m: 1,
-                  width: "100%",
-                  height: 30,
-                  backgroundColor: "white",
-                  boxShadow: "1px 1px 2px 2px #d8d8d8",
-                  borderRadius: 2,
-                }}>
-                <div style={{ flex: 4 }}>{e.itemName}</div>
-                <div style={{ flex: 1 }}>
-                  <div className='flex-row'>{e.itemAmount}</div>
-                </div>
-                <div style={{ flex: 3 }}>
-                  Rp
-                  {e.itemPrice
-                    .toString()
-                    .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <IconButton
-                    color='primary'
-                    aria-label='upload picture'
-                    component='label'
-                    onClick={() =>
-                      handleDeleteItem(e.uuid, e.itemPrice, e.itemAmount)
-                    }>
-                    <DeleteIcon />
-                  </IconButton>
-                </div>
-              </Box>
-            </div>
-          );
+        {dataLocalStorage.map((e, index) => {
+          if (e.itemAmount > 0) {
+            return (
+              <div
+                key={index}
+                className='flex-row'
+                style={{ justifyContent: "center" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    p: 2,
+                    m: 1,
+                    width: "100%",
+                    height: 30,
+                    backgroundColor: "white",
+                    boxShadow: "1px 1px 2px 2px #d8d8d8",
+                    borderRadius: 2,
+                  }}>
+                  <div style={{ flex: 4 }}>{e.itemName}</div>
+                  <div style={{ flex: 1 }}>
+                    <div className='flex-row'>{e.itemAmount}</div>
+                  </div>
+                  <div style={{ flex: 3 }}>
+                    Rp
+                    {e.itemPrice
+                      .toString()
+                      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <IconButton
+                      color='primary'
+                      aria-label='upload picture'
+                      component='label'
+                      onClick={() =>
+                        handleDeleteItem(e.uuid, e.itemPrice, e.itemAmount)
+                      }>
+                      <DeleteIcon />
+                    </IconButton>
+                  </div>
+                </Box>
+              </div>
+            );
+          } else {
+            return <> </>;
+          }
         })}
       </>
     );
@@ -150,9 +178,7 @@ const Home = () => {
   return (
     <div>
       <div className='flex-row-resp'>
-        INI TEXT SOPAN
         <TableDataItem
-          data={dataFromApi}
           dataClicked={childToParent}
           removeDataClicked={childToParentRemove}
           dataUnitType={unitTypeFromApi}
@@ -197,6 +223,7 @@ const Home = () => {
             <Button
               onClick={() => {
                 setDataTransaction([]);
+                localStorage.setItem("dataTransaction", "[]");
                 setSubtotal(0);
               }}>
               RESET

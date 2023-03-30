@@ -10,6 +10,7 @@ const Settings = () => {
   const [inputUser, setInputUser] = useState({});
   const [dataPaymentMethod, setDataPaymentMethod] = useState([]);
   const [dataUnitType, setDataUnitType] = useState([]);
+  const [trigger, setTrigger] = useState(false);
 
   useEffect(() => {
     axios
@@ -22,7 +23,11 @@ const Settings = () => {
           .catch((err) => console.log("error get unit type", err));
       })
       .catch((err) => console.log("error get paymentmethod", err));
-  }, []);
+  }, [trigger]);
+
+  const handleTrigger = (childData) => {
+    setTrigger(childData);
+  };
 
   const reset = () => {
     setInputUser({});
@@ -41,6 +46,7 @@ const Settings = () => {
         paymentMethodName: inputUser.paymentMethod,
       })
       .then(() => {
+        setTrigger(!trigger);
         alert("new payment method added");
         reset();
       })
@@ -53,6 +59,7 @@ const Settings = () => {
         unitType: inputUser.unitType,
       })
       .then(() => {
+        setTrigger(!trigger);
         alert("new Unit Type added");
         reset();
       })
@@ -61,7 +68,7 @@ const Settings = () => {
 
   return (
     <div>
-      <div className='flex-row' style={{justifyContent: "stretch"}}>
+      <div className='flex-row' style={{ justifyContent: "stretch" }}>
         <Paper sx={{ p: 2, m: 1, flex: 1, alignSelf: "stretch" }}>
           <div>Add New Payment Method</div>
           <TextField
@@ -84,7 +91,11 @@ const Settings = () => {
                 className='flex-row'
                 key={e.id}>
                 <div>{e.paymentMethod}</div>
-                <DeletePaymentMethod methodClicked={e} />
+                <DeletePaymentMethod
+                  methodClicked={e}
+                  trigger={trigger}
+                  setTrigger={handleTrigger}
+                />
               </Paper>
             );
           })}
@@ -111,7 +122,11 @@ const Settings = () => {
                 className='flex-row'
                 key={e.id}>
                 <div>{e.unitType}</div>
-                <DeleteUnitType unitTypeClicked={e} />
+                <DeleteUnitType
+                  unitTypeClicked={e}
+                  trigger={trigger}
+                  setTrigger={handleTrigger}
+                />
               </Paper>
             );
           })}

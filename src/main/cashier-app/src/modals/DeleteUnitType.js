@@ -9,7 +9,7 @@ import axios from "axios";
 import { linkApi } from "../service/linkApi";
 import { Delete } from "@mui/icons-material";
 
-const DeleteUnitType = ({ unitTypeClicked }) => {
+const DeleteUnitType = ({ unitTypeClicked, trigger, setTrigger }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -23,10 +23,9 @@ const DeleteUnitType = ({ unitTypeClicked }) => {
         },
       })
       .then(() => {
+        setTrigger(!trigger);
         handleClose();
-        alert(
-          `Succesfully Delete Unit Type ${unitTypeClicked.unitType}`
-        );
+        alert(`Succesfully Delete Unit Type ${unitTypeClicked.unitType}`);
       })
       .catch((err) => console.log("failed delete unit type", err));
   };
