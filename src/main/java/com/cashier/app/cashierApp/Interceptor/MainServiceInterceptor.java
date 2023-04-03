@@ -18,11 +18,11 @@ public class MainServiceInterceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle (
         HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-        // ProductKey productKey = productKeyRepository.getOneById(1);
-        // if(productKey.getIsActive() == false){
-        //     response.sendRedirect("/product_key_activation");
-        //     return false;
-        // }
+        ProductKey productKey = productKeyRepository.getOneById(1);
+        if(productKey.getIsActive() == false){
+            response.sendRedirect("/product_key_activation");
+            return false;
+        }
         return true;
     }
 

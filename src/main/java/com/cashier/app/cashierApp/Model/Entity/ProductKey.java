@@ -27,7 +27,11 @@ public class ProductKey {
         this.isActive = isActive;
         this.productKey = productKey;
     }
-    
+
+    public ProductKey(String productKey) {
+        this.productKey = productKey;
+    }
+
     public Boolean getIsActive() {
         return isActive;
     }

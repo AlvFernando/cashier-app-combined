@@ -12,6 +12,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 
 @Service
@@ -37,5 +38,32 @@ public class ProductKeyService {
         }
     
         return productKeyList;
+    }
+
+    //null safety with annotation
+    //select 1 by name
+    public ProductKey getProductKey(@javax.annotation.Nonnull String key) throws ExecutionException, InterruptedException{
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+        DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(key);
+        ApiFuture<DocumentSnapshot> future = documentReference.get();
+        DocumentSnapshot document = future.get();
+        ProductKey productKey = null;
+        System.out.println(document.getData());
+        if(document.exists()){
+            productKey = document.toObject(ProductKey.class);
+            return productKey;
+        }else{
+            ProductKey productKey2 = new ProductKey(
+                false, "null"
+            );
+            return productKey2;
+        }
+    }
+
+    //update spesific field
+    public String update(@javax.annotation.Nonnull Boolean isActive,@javax.annotation.Nonnull String uniqueKey) throws ExecutionException, InterruptedException{
+        Firestore dbFirestore = FirestoreClient.getFirestore();        
+        ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection(COLLECTION_NAME).document(uniqueKey).update("isActive",isActive);
+        return collectionApiFuture.get().getUpdateTime().toString();
     }
 }
