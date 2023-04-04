@@ -31,6 +31,15 @@ public class ProductKeyController {
         return productKeyService.getProductKey();
     }
 
+    @GetMapping("/isvalid")
+    public ResponseEntity<Object> isKeyValid(){
+        ProductKey localData = productKeyRepository.getOneById(1);
+        if(localData.getIsActive().equals(false)){
+            return ResponseHandler.generateResponse("App is not activated", HttpStatus.OK, localData);
+        }
+        return ResponseHandler.generateResponse("App is activated", HttpStatus.OK, localData);
+    }
+
     //activation function
     @PostMapping("/activation")
     public ResponseEntity<Object> addTransaction(@RequestBody ProductKey productKey){
@@ -41,6 +50,7 @@ public class ProductKeyController {
             }
             //check if data exist
             ProductKey data = productKeyService.getProductKey(productKey.getProductKey());
+
             if(data.equals(null)){
                 return ResponseHandler.generateResponse("Product key not valid", HttpStatus.INTERNAL_SERVER_ERROR, null);
             }
@@ -50,6 +60,7 @@ public class ProductKeyController {
                 ProductKey localData = productKeyRepository.getOneById(1);
                 localData.setProductKey(data.getProductKey());
                 localData.setIsActive(true);
+                productKeyRepository.save(localData);
 
                 //update key to firebase
                 String firebaseData = productKeyService.update(true, productKey.getProductKey());

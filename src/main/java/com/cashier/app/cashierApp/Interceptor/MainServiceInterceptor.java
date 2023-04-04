@@ -21,6 +21,7 @@ public class MainServiceInterceptor implements HandlerInterceptor{
         ProductKey productKey = productKeyRepository.getOneById(1);
         if(productKey.getIsActive() == false){
             response.sendRedirect("/product_key_activation");
+            //response.sendRedirect("/activation");
             return false;
         }
         return true;

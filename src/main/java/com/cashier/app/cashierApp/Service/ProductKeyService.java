@@ -48,7 +48,6 @@ public class ProductKeyService {
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         DocumentSnapshot document = future.get();
         ProductKey productKey = null;
-        System.out.println(document.getData());
         if(document.exists()){
             productKey = document.toObject(ProductKey.class);
             return productKey;

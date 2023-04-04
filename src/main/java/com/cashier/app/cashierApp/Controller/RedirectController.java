@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class RedirectController {
     @GetMapping("/product_key_activation")
     public String redirect(){
-        return "activationPage";
+        //return "activationPage";
+        return "redirect:activationPage";
     }
 }
