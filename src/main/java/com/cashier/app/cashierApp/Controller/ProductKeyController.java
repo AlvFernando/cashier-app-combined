@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cashier.app.cashierApp.Model.ResponseHandler;
@@ -37,6 +38,17 @@ public class ProductKeyController {
         if(localData.getIsActive().equals(false)){
             return ResponseHandler.generateResponse("App is not activated", HttpStatus.OK, localData);
         }
+        return ResponseHandler.generateResponse("App is activated", HttpStatus.OK, localData);
+    }
+
+    @GetMapping("/isvalidtest")
+    public ResponseEntity<Object> isKeyValid(@RequestParam String key){
+        //ProductKey localData = productKeyRepository.getOneById(1);
+        if(key.equals("false-key")){
+            ProductKey localData = new ProductKey(false,"false-key");
+            return ResponseHandler.generateResponse("App is not activated", HttpStatus.OK, localData);
+        }
+        ProductKey localData = new ProductKey(true,"true-key");
         return ResponseHandler.generateResponse("App is activated", HttpStatus.OK, localData);
     }
 
