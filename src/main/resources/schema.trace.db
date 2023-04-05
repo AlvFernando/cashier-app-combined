@@ -5261,3 +5261,6 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "paymentmethodid" not found [421
 2023-03-21 14:58:06 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT new com[*].cashier.app.cashierApp.Model.View.TransactionHeaderView(th.ID, TRANSACTIONDATE, PAYMENT, PAYMENTMETHOD, UUID) FROM transactionheader th JOIN paymentmethod pm on th.paymentmethodid=pm.id WHERE transactiondate>=? AND transactiondate<=?"; SQL statement:
 SELECT new com.cashier.app.cashierApp.Model.View.TransactionHeaderView(th.ID, TRANSACTIONDATE, PAYMENT, PAYMENTMETHOD, UUID) FROM transactionheader th JOIN paymentmethod pm on th.paymentmethodid=pm.id WHERE transactiondate>=? AND transactiondate<=? [42000-214]
+2023-04-03 19:37:12 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]selecy * from productkey"; expected "SAVEPOINT, SCRIPT, SHUTDOWN, SHOW"; SQL statement:
+selecy * from productkey [42001-214]
