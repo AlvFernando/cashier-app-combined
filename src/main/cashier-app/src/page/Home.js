@@ -9,6 +9,7 @@ import axios from "axios";
 import AddItem from "../modals/AddItem";
 import { linkApi } from "../service/linkApi";
 import PayItem from "../modals/PayItem";
+import customAxios from "../service/customAxios"
 
 const Home = () => {
   const [unitTypeFromApi, setUnitTypeFromApi] = useState([]);
@@ -22,7 +23,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    axios
+    customAxios
       .get(`${linkApi}api/unittype`)
       .then((res) => setUnitTypeFromApi(res.data.data))
       .catch((err) => console.log("Error get Unit Type", err));

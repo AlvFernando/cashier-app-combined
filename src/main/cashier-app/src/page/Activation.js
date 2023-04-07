@@ -1,11 +1,22 @@
 import { Button, Paper, TextField, Typography } from "@mui/material";
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import {linkActivateProduct} from "../service/linkApi"
 
 const Activation = () => {
   const [inputUser, setInputUser] = useState("");
 
   const valid = inputUser.length > 0;
+
+  const handleActivate = () => {
+    axios
+      .post(linkActivateProduct, {
+        productKey: inputUser,
+      })
+      .then((res) => console.log("success post activation key", res))
+      .catch((err) => console.log("failed post activation key", err));
+  };
 
   return (
     <div
@@ -44,7 +55,11 @@ const Activation = () => {
           />
         </div>
         <div className='flex-row' style={{ justifyContent: "center" }}>
-          <Button disabled={!valid} sx={{ width: "80%" }} variant='contained'>
+          <Button
+            disabled={!valid}
+            sx={{ width: "80%" }}
+            variant='contained'
+            onClick={handleActivate}>
             SUBMIT
           </Button>
         </div>

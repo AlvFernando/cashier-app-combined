@@ -38,6 +38,7 @@ import AddItem from "../modals/AddItem";
 import axios from "axios";
 import { linkApi } from "../service/linkApi";
 import EditItem from "../modals/EditItem";
+import customAxios from "../service/customAxios"
 
 const TableDataItem = ({
   dataClicked,
@@ -72,7 +73,7 @@ const TableDataItem = ({
   };
 
   useEffect(() => {
-    axios
+    customAxios
       .get(`${linkApi}api/getallitem`)
       .then((res) => {
         setDataItemFromApi(res.data.data);
