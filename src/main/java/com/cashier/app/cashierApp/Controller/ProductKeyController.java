@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,11 +28,13 @@ public class ProductKeyController {
     @Autowired ProductKeyRepository productKeyRepository;
 
     //get all
+    @CrossOrigin
     @GetMapping("/getall")
     public List<ProductKey> getAll() throws ExecutionException, InterruptedException{
         return productKeyService.getProductKey();
     }
 
+    @CrossOrigin
     @GetMapping("/isvalid")
     public ResponseEntity<Object> isKeyValid(){
         ProductKey localData = productKeyRepository.getOneById(1);
@@ -41,7 +44,8 @@ public class ProductKeyController {
         return ResponseHandler.generateResponse("App is activated", HttpStatus.OK, localData);
     }
 
-    @GetMapping("/isvalidtest")
+    @CrossOrigin
+    @PostMapping("/isvalidtest")
     public ResponseEntity<Object> isKeyValid(@RequestParam String key){
         //ProductKey localData = productKeyRepository.getOneById(1);
         if(key.equals("false-key")){
@@ -53,6 +57,7 @@ public class ProductKeyController {
     }
 
     //activation function
+    @CrossOrigin
     @PostMapping("/activation")
     public ResponseEntity<Object> addTransaction(@RequestBody ProductKey productKey){
         try {

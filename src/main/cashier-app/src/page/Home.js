@@ -6,10 +6,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import TableDataItem from "../components/TableDataItem";
 import { Button, Divider, TextField } from "@mui/material";
 import axios from "axios";
-import AddItem from "../modals/AddItem";
 import { linkApi } from "../service/linkApi";
 import PayItem from "../modals/PayItem";
-import customAxios from "../service/customAxios"
 
 const Home = () => {
   const [unitTypeFromApi, setUnitTypeFromApi] = useState([]);
@@ -23,7 +21,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    customAxios
+    axios
       .get(`${linkApi}api/unittype`)
       .then((res) => setUnitTypeFromApi(res.data.data))
       .catch((err) => console.log("Error get Unit Type", err));
