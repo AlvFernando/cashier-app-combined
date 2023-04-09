@@ -40,3 +40,8 @@ CREATE TABLE IF NOT EXISTS productkey(
     productKey varchar(10),
     isActive boolean
 );
+
+CREATE TABLE IF NOT EXISTS printerDevice(
+    id int primary key auto_increment,
+    printerDeviceName varchar(30)
+);
