@@ -44,7 +44,9 @@ public class PrinterController {
         try {
             Printer usedPrinterDevice = printerRepository.findOneById(1);
             if(usedPrinterDevice == null){
-                System.out.println("data is null");
+                //insert data to database
+                Printer printer = new Printer(1,"");
+                printerRepository.save(printer);
             }
             return ResponseHandler.generateResponse("Success", HttpStatus.OK, usedPrinterDevice);
         } catch (Exception e) {
