@@ -9,8 +9,8 @@ import com.cashier.app.cashierApp.Interceptor.MainServiceInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
-    @Autowired
-    private MainServiceInterceptor mainServiceInterceptor;
+    //@Autowired
+    //private MainServiceInterceptor mainServiceInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

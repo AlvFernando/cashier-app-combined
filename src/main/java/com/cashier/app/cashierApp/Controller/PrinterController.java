@@ -48,6 +48,7 @@ public class PrinterController {
                 Printer printer = new Printer(1,"");
                 printerRepository.save(printer);
             }
+            
             return ResponseHandler.generateResponse("Success", HttpStatus.OK, usedPrinterDevice);
         } catch (Exception e) {
             // TODO: handle exception
