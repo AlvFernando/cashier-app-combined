@@ -72,8 +72,6 @@ public class ProductKeyController {
                 return ResponseHandler.generateResponse("Product key not valid", HttpStatus.INTERNAL_SERVER_ERROR, null);
             }
 
-            System.out.println(data.toString());
-
             if(data.getIsActive() == false){
                 //update key to local database
                 ProductKey localData = productKeyRepository.getOneById(1);

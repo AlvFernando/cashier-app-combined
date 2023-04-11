@@ -14,6 +14,10 @@ public class Printer {
     @Column(name = "printerdevicename")
     String printerName;
 
+    public Printer() {
+        super();
+    }
+
     public Printer(Integer id, String printerName) {
         this.id = id;
         this.printerName = printerName;
