@@ -2,7 +2,6 @@ import { Delete, Remove } from "@mui/icons-material";
 import {
   Button,
   FormControl,
-  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -55,7 +54,15 @@ const PrintSettings = () => {
   };
 
   const handleNewPrinter = () => {
-    //hit API post untuk new printer
+    axios
+      .put(`${linkApi}api/usedprinterdevice`, {
+        printerName: inputUser.newPrinter,
+      })
+      .then((res) => {
+        console.log("success put new printer", res);
+        setTrigger(!trigger);
+      })
+      .catch((err) => console.log("error put new printer", err));
   };
 
   const handleEditUsedPrinter = () => {
