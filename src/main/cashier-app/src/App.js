@@ -7,6 +7,7 @@ import Settings from "./page/Settings";
 import Activation from "./page/Activation";
 import axios from "axios";
 import { linkCheckProductKey } from "./service/linkApi";
+import PrintSettings from "./page/PrintSettings";
 
 function App() {
   const [expand, setExpand] = useState(false);
@@ -16,15 +17,13 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Masuk useEffect App");
-
     axios
       .get(linkCheckProductKey)
       .then((res) => {
         console.log("ini response link check product key", res);
         if (res.data.data.isActive === true) {
           setValid(true);
-          navigate("/home")
+          navigate("/home");
         } else {
           setValid(false);
           navigate("/activation");
@@ -57,6 +56,7 @@ function App() {
               <Route path='/' element={<Navigate replace to='/home' />} />
               <Route path='/home' element={<Home />}></Route>
               <Route path='/settings' element={<Settings />}></Route>
+              <Route path='/print-settings' element={<PrintSettings />}></Route>
               <Route path='/history' element={<TransactionHistory />}></Route>
               <Route path='/activation' element={<Activation />}></Route>
             </Routes>

@@ -34,7 +34,10 @@ const PayItem = ({ dataTransaction, subtotal }) => {
       });
   }, []);
 
-  const valid = inputPay.length > 0 && inputPaymentType !== "" && (parseInt(inputPay.replace(/\./g, ""), 10) - subtotal) >=0
+  const valid =
+    inputPay.length > 0 &&
+    inputPaymentType !== "" &&
+    parseInt(inputPay.replace(/\./g, ""), 10) - subtotal >= 0;
 
   const handleTransaction = (e) => {
     e.preventDefault();
@@ -57,6 +60,38 @@ const PayItem = ({ dataTransaction, subtotal }) => {
       })
       .then((res) => {
         console.log("Success Post New Transaction", res);
+        handleClose();
+      })
+      .catch((err) => console.log("Error Post New Transaction", err));
+  };
+
+  const handleTransactionPrint = (e) => {
+    e.preventDefault();
+    const transactionDetail = dataTransaction.map((e) => {
+      return {
+        itemId: e.uuid,
+        amount: e.itemAmount,
+      };
+    });
+
+    const payment = parseInt(inputPay.replace(/\./g, ""), 10);
+
+    const dataTransactionToApi = {
+      transactionHeader: {
+        payment,
+        paymentMethodId: inputPaymentType,
+      },
+      transactionDetail,
+    };
+
+    axios
+      .post(`${linkApi}api/transaction`, dataTransactionToApi)
+      .then((res) => {
+        console.log("Success Post New Transaction", res);
+        axios
+          .post(`${linkApi}api/printreceipt`, dataTransactionToApi)
+          .then((res) => console.log("success print transaction", res))
+          .catch((err) => console.log("error print transaction", err));
         handleClose();
       })
       .catch((err) => console.log("Error Post New Transaction", err));
@@ -85,7 +120,9 @@ const PayItem = ({ dataTransaction, subtotal }) => {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>Pay Item</Button>
+      <Button variant='contained' onClick={handleOpen}>
+        Pay Item
+      </Button>
       <Modal
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
@@ -171,7 +208,14 @@ const PayItem = ({ dataTransaction, subtotal }) => {
                 <Button
                   variant='contained'
                   sx={{ m: 1 }}
-                  disabled = {!valid}
+                  disabled={!valid}
+                  onClick={handleTransactionPrint}>
+                  Pay + Print
+                </Button>
+                <Button
+                  variant='contained'
+                  sx={{ m: 1 }}
+                  disabled={!valid}
                   onClick={handleTransaction}>
                   Pay
                 </Button>
