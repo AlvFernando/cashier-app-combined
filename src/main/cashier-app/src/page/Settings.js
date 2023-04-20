@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import DeletePaymentMethod from "../modals/DeletePaymentMethod";
 import DeleteUnitType from "../modals/DeleteUnitType";
 import { linkApi } from "../service/linkApi";
+import PrintSettings from "./PrintSettings";
 
 const Settings = () => {
   const [inputUser, setInputUser] = useState({});
@@ -132,6 +133,7 @@ const Settings = () => {
           })}
         </Paper>
       </div>
+      <PrintSettings />
     </div>
   );
 };

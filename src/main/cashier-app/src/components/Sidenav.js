@@ -58,12 +58,6 @@ const Sidenav = ({ childToParent }) => {
               </NavIcon>
               <NavText>Settings</NavText>
             </NavItem>
-            <NavItem eventKey='print-settings'>
-              <NavIcon>
-                <Print sx={{marginTop: "12px"}}/>
-              </NavIcon>
-              <NavText>Printer Settings</NavText>
-            </NavItem>
             <NavItem eventKey='activation'>
               <NavIcon>
                 <Key sx={{marginTop: "12px"}}/>

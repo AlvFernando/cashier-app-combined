@@ -59,8 +59,6 @@ const PrintSettings = () => {
     }));
   };
 
-  console.log("this is inputUser: ", inputUser);
-
   const handleNewPrinter = () => {
     axios
       .put(`${linkApi}api/usedprinterdevice`, {
@@ -117,7 +115,7 @@ const PrintSettings = () => {
               Choose Printer
             </Button>
           </div>
-          <div>Add New Printer</div>
+          {/* <div>Add New Printer</div>
           <TextField
             name='newPrinter'
             value={inputUser.newPrinter || ""}
@@ -129,7 +127,7 @@ const PrintSettings = () => {
           />
           <Button variant='contained' onClick={handleNewPrinter}>
             Add New
-          </Button>
+          </Button> */}
         </Paper>
       </div>
     </div>

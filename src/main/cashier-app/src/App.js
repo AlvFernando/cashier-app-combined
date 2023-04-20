@@ -57,7 +57,6 @@ function App() {
               <Route path='/' element={<Navigate replace to='/home' />} />
               <Route path='/home' element={<Home />}></Route>
               <Route path='/settings' element={<Settings />}></Route>
-              <Route path='/print-settings' element={<PrintSettings />}></Route>
               <Route path='/history' element={<TransactionHistory />}></Route>
               <Route path='/activation' element={<Activation />}></Route>
             </Routes>
@@ -66,7 +65,6 @@ function App() {
               <Route path='/' element={<Navigate replace to='/home' />} />
               <Route path='/home' element={<Home />}></Route>
               <Route path='/settings' element={<Settings />}></Route>
-              <Route path='/print-settings' element={<PrintSettings />}></Route>
               <Route path='/history' element={<TransactionHistory />}></Route>
               <Route path='/activation' element={<Activation />}></Route>
             </Routes>
