@@ -22,7 +22,7 @@ const PrintSettings = () => {
       .get(`${linkApi}api/getprinterdevice`)
       .then((res) => {
         setDataPrinterApi(res.data.data);
-        console.log("success get data all printer", res.data.data);
+        // console.log("success get data all printer", res.data.data);
       })
       .catch((err) => console.log("error get data all printer", err));
 
@@ -30,10 +30,9 @@ const PrintSettings = () => {
       .get(`${linkApi}api/usedprinterdevice`)
       .then((res) => {
         setInputUser({
-          ...inputPrinter,
-          [inputPrinter.printerUsed]: res.data.data.printerName,
+          printerUsed: res.data.data.printerName,
         });
-        console.log("success get data printer used", res);
+        // console.log("success get data printer used", res);
       })
       .catch((err) => console.log("error get data printer used", err));
   }, [trigger]);
@@ -52,6 +51,15 @@ const PrintSettings = () => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const handleInputDropdownChange = (e) => {
+    setInputUser((prev) => ({
+      ...prev,
+      printerUsed: e.target.value,
+    }));
+  };
+
+  console.log("this is inputUser: ", inputUser);
 
   const handleNewPrinter = () => {
     axios
@@ -93,9 +101,10 @@ const PrintSettings = () => {
               labelId='demo-select-small'
               id='demo-select-small'
               name='printerUsed'
-              value={inputUser.printerUsed}
+              value={inputUser.printerUsed || ""}
               label='Choose Printer'
-              onChange={handleInputChange}>
+              onChange={handleInputChange}
+            >
               {dataPrinterApi.map((e, index) => (
                 <MenuItem key={index} value={e.printerName}>
                   {e.printerName}

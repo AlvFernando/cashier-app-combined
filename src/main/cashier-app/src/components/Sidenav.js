@@ -7,6 +7,7 @@ import {
   History,
   Home,
   Key,
+  Print,
   Remove,
   Settings,
 } from "@mui/icons-material";
@@ -56,6 +57,12 @@ const Sidenav = ({ childToParent }) => {
                 <Settings sx={{marginTop: "12px"}}/>
               </NavIcon>
               <NavText>Settings</NavText>
+            </NavItem>
+            <NavItem eventKey='print-settings'>
+              <NavIcon>
+                <Print sx={{marginTop: "12px"}}/>
+              </NavIcon>
+              <NavText>Printer Settings</NavText>
             </NavItem>
             <NavItem eventKey='activation'>
               <NavIcon>
