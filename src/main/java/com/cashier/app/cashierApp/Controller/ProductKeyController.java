@@ -67,7 +67,6 @@ public class ProductKeyController {
             }
             //check if data exist
             ProductKey data = productKeyService.getProductKey(productKey.getProductKey());
-
             if(data.equals(null)){
                 return ResponseHandler.generateResponse("Product key not valid", HttpStatus.INTERNAL_SERVER_ERROR, null);
             }
