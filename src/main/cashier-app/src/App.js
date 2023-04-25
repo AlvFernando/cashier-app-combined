@@ -17,22 +17,22 @@ function App() {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   axios
-  //     .get(linkCheckProductKey)
-  //     .then((res) => {
-  //       console.log("ini response link check product key", res);
-  //       if (res.data.data.isActive === true) {
-  //         setValid(true);
-  //         navigate("/home");
-  //       } else {
-  //         setValid(false);
-  //         // navigate("/activation");
-  //         window.location.href = "/activation"
-  //       }
-  //     })
-  //     .catch((err) => console.log("solution error", err));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(linkCheckProductKey)
+      .then((res) => {
+        console.log("ini response link check product key", res);
+        if (res.data.data.isActive === true) {
+          setValid(true);
+          navigate("/home");
+        } else {
+          setValid(false);
+          // navigate("/activation");
+          // window.location.href = "/activation"
+        }
+      })
+      .catch((err) => console.log("solution error", err));
+  }, []);
 
   const childToParent = (childData) => {
     setExpand(childData);
@@ -49,28 +49,30 @@ function App() {
 
   return (
     <>
-      <Sidenav childToParent={childToParent}></Sidenav>
-      <div style={{ marginLeft: `${margin}px` }}>
-        <div>
           {valid === true ? (
-            <Routes>
-              <Route path='/' element={<Navigate replace to='/home' />} />
-              <Route path='/home' element={<Home />}></Route>
-              <Route path='/settings' element={<Settings />}></Route>
-              <Route path='/history' element={<TransactionHistory />}></Route>
-              <Route path='/activation' element={<Activation />}></Route>
-            </Routes>
+            <>
+            <Sidenav childToParent={childToParent}></Sidenav><div style={{ marginLeft: `${margin}px` }}>
+              <div>
+                <Routes>
+                  <Route path='/' element={<Navigate replace to='/home' />} />
+                  <Route path='/home' element={<Home />}></Route>
+                  <Route path='/settings' element={<Settings />}></Route>
+                  <Route path='/history' element={<TransactionHistory />}></Route>
+                  <Route path='/activation' element={<Activation />}></Route>
+                </Routes>
+              </div>
+            </div>
+            </>
           ) : (
+            <>
+            <div>
             <Routes>
-              <Route path='/' element={<Navigate replace to='/home' />} />
-              <Route path='/home' element={<Home />}></Route>
-              <Route path='/settings' element={<Settings />}></Route>
-              <Route path='/history' element={<TransactionHistory />}></Route>
+              <Route path='/' element={<Navigate replace to='/activation' />} />
               <Route path='/activation' element={<Activation />}></Route>
             </Routes>
+            </div>
+            </>
           )}
-        </div>
-      </div>
     </>
   );
 }

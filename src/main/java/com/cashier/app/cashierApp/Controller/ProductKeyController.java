@@ -70,7 +70,7 @@ public class ProductKeyController {
             if(data.equals(null)){
                 return ResponseHandler.generateResponse("Product key not valid", HttpStatus.INTERNAL_SERVER_ERROR, null);
             }
-
+            System.out.println("hitted 1");
             if(data.getIsActive() == false){
                 //update key to local database
                 ProductKey localData = productKeyRepository.getOneById(1);
@@ -79,7 +79,8 @@ public class ProductKeyController {
                 productKeyRepository.save(localData);
 
                 //update key to firebase
-                String firebaseData = productKeyService.update(true, data.getProductKey());
+                System.out.println("hitted 2");
+                String firebaseData = productKeyService.update(true, productKey.getProductKey());
             }else{
                 return ResponseHandler.generateResponse("Product key already used", HttpStatus.OK, null);
             }
