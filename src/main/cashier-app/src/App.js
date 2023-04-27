@@ -27,8 +27,6 @@ function App() {
           navigate("/home");
         } else {
           setValid(false);
-          // navigate("/activation");
-          // window.location.href = "/activation"
         }
       })
       .catch((err) => console.log("solution error", err));

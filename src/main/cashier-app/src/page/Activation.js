@@ -2,19 +2,28 @@ import { Button, Paper, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
-import {linkActivateProduct} from "../service/linkApi"
+import { linkActivateProduct } from "../service/linkApi";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 const Activation = () => {
+  const navigate = useNavigate();
+
   const [inputUser, setInputUser] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const valid = inputUser.length > 0;
 
   const handleActivate = () => {
+    setLoading(true);
     axios
       .post(linkActivateProduct, {
         productKey: inputUser,
       })
-      .then((res) => console.log("success post activation key", res))
+      .then((res) => {
+        console.log("success post activation key", res);
+        navigate(0);
+      })
       .catch((err) => console.log("failed post activation key", err));
   };
 
@@ -54,6 +63,7 @@ const Activation = () => {
             onChange={(e) => setInputUser(e.target.value)}
           />
         </div>
+        <Spinner loading={loading} />
         <div className='flex-row' style={{ justifyContent: "center" }}>
           <Button
             disabled={!valid}
