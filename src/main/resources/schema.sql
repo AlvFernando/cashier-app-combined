@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS transactionDetail(
 
 CREATE TABLE IF NOT EXISTS productkey(
     id bigint primary key auto_increment,
-    productKey varchar(10),
+    productKey varchar(30),
     isActive boolean
 );
 
