@@ -25,7 +25,8 @@ public class ProductKeyController {
     @Autowired
     private ProductKeyService productKeyService;
 
-    @Autowired ProductKeyRepository productKeyRepository;
+    @Autowired 
+    ProductKeyRepository productKeyRepository;
 
     //get all
     @CrossOrigin
@@ -34,10 +35,28 @@ public class ProductKeyController {
         return productKeyService.getProductKey();
     }
 
+    //get application product id
+    @CrossOrigin
+    @GetMapping("/getproductid")
+    public ResponseEntity<Object> getProductId(){
+        try {
+            ProductKey localData = productKeyRepository.getOneById(1);
+            return ResponseHandler.generateResponse("Success", HttpStatus.OK, localData);
+        } catch (Exception e) {
+            // TODO: handle exception
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.MULTI_STATUS, null);
+        }
+    }
+
     @CrossOrigin
     @GetMapping("/isvalid")
     public ResponseEntity<Object> isKeyValid(){
         ProductKey localData = productKeyRepository.getOneById(1);
+        if(localData == null){
+            ProductKey productKey = new ProductKey(1,false,"");
+            productKeyRepository.save(productKey);
+            return ResponseHandler.generateResponse("App is not activated", HttpStatus.OK, productKey);
+        }
         if(localData.getIsActive().equals(false)){
             return ResponseHandler.generateResponse("App is not activated", HttpStatus.OK, localData);
         }

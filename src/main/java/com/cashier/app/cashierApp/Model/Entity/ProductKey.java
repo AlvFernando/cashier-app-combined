@@ -23,6 +23,12 @@ public class ProductKey {
         super();
     }
     
+    public ProductKey(Integer id, Boolean isActive, String productKey) {
+        this.id = id;
+        this.isActive = isActive;
+        this.productKey = productKey;
+    }
+
     public ProductKey(Boolean isActive, String productKey) {
         this.isActive = isActive;
         this.productKey = productKey;
