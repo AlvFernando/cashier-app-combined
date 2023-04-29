@@ -79,14 +79,10 @@ const PrintSettings = () => {
       .then((res) => {
         console.log("success put used printer", res);
         setTrigger(!trigger);
+        alert(`printer ${inputUser.printerUsed} has been choosen`);
       })
       .catch((err) => console.log("error put used printer", err));
   };
-
-  // const dataPrinter = [
-  //   { id: 1, printerName: "Epson" },
-  //   { id: 2, printerName: "Hp" },
-  // ];
 
   return (
     <div>
@@ -115,19 +111,6 @@ const PrintSettings = () => {
               Choose Printer
             </Button>
           </div>
-          {/* <div>Add New Printer</div>
-          <TextField
-            name='newPrinter'
-            value={inputUser.newPrinter || ""}
-            onChange={handleInputChange}
-            variant='outlined'
-            placeholder='insert New Printer'
-            fullWidth
-            sx={{ mt: 2, mb: 2 }}
-          />
-          <Button variant='contained' onClick={handleNewPrinter}>
-            Add New
-          </Button> */}
         </Paper>
       </div>
     </div>

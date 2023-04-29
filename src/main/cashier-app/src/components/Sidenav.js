@@ -30,7 +30,7 @@ const Sidenav = ({ childToParent }) => {
         <SideNav
           className='sidenav'
           onSelect={(selected) => {
-            console.log("selected", selected);
+            // console.log("selected", selected);
             navigate(selected);
           }}
           expanded={expand}

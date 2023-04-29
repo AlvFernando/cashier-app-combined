@@ -7,10 +7,8 @@ import Settings from "./page/Settings";
 import Activation from "./page/Activation";
 import axios from "axios";
 import { linkCheckProductKey } from "./service/linkApi";
-import PrintSettings from "./page/PrintSettings";
 
 function App() {
-  //UNDO THIS WHOLE PAGES
   const [expand, setExpand] = useState(false);
   const [margin, setMargin] = useState(64);
   const [valid, setValid] = useState(false);

@@ -1,8 +1,8 @@
 import { Button, Paper, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { linkActivateProduct } from "../service/linkApi";
+import { linkActivateProduct, linkApi } from "../service/linkApi";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 
@@ -11,8 +11,22 @@ const Activation = () => {
 
   const [inputUser, setInputUser] = useState("");
   const [loading, setLoading] = useState(false);
+  const [productKey, setProductKey] = useState("");
 
   const valid = inputUser.length > 0;
+
+  useEffect(() => {
+    axios.get(`${linkApi}productkey/getproductid`).
+    then((res) => {
+      console.log("response getproductid: ", res);
+      if(res.data.data.isActive === true){
+        setProductKey(res.data.data.productKey);
+      }else{
+        alert("Product key invalid");
+      }
+    }).
+    catch((err) => console.log("error getproductid", err));
+  }, [])
 
   const handleActivate = () => {
     setLoading(true);
@@ -53,15 +67,26 @@ const Activation = () => {
         <div
           className='flex-row'
           style={{ justifyContent: "center", marginBottom: "30px" }}>
-          {/* <Typography>KEY :</Typography> */}
-          <TextField
-            id='outlined-basic'
-            label='please input your key here'
-            variant='outlined'
-            sx={{ width: "80%" }}
-            value={inputUser}
-            onChange={(e) => setInputUser(e.target.value)}
-          />
+          {
+            productKey.length > 0 
+            ?
+            <>
+              <Typography variant="h7" sx={{width: "80%", textAlign:"center"}}>
+                {productKey}
+              </Typography>
+            </>
+            :
+            <>
+              <TextField
+              id='outlined-basic'
+              label='please input your key here'
+              variant='outlined'
+              sx={{ width: "80%" }}
+              value={inputUser}
+              onChange={(e) => setInputUser(e.target.value)}
+            />
+            </>
+          }
         </div>
         <Spinner loading={loading} />
         <div className='flex-row' style={{ justifyContent: "center" }}>
