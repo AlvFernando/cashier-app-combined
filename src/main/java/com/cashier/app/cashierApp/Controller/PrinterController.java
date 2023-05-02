@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cashier.app.cashierApp.Helper.SpaceHelper;
 import com.cashier.app.cashierApp.Model.ResponseHandler;
 import com.cashier.app.cashierApp.Model.Entity.Item;
 import com.cashier.app.cashierApp.Model.Entity.PaymentMethod;
@@ -163,12 +164,19 @@ public class PrinterController {
                 .writeLF(localDateTime.toString())
                 .writeLF("--------------------------------");
             for(int i=0;i<itemList.size();i++){
+                // customReceipt.writeLF(
+                //     itemList.get(i).getItemName()
+                //     +" "
+                //     +transaction.getTransactionDetail().get(i).getAmount()
+                //     +"        "
+                //     +transaction.getTransactionDetail().get(i).getAmount()*itemList.get(i).getItemPrice()
+                // );
                 customReceipt.writeLF(
-                    itemList.get(i).getItemName()
-                    +" "
-                    +transaction.getTransactionDetail().get(i).getAmount()
-                    +"        "
-                    +transaction.getTransactionDetail().get(i).getAmount()*itemList.get(i).getItemPrice()
+                    SpaceHelper.spaceHelper(
+                        itemList.get(i).getItemName(),
+                        transaction.getTransactionDetail().get(i).getAmount(),
+                        transaction.getTransactionDetail().get(i).getAmount()*itemList.get(i).getItemPrice()
+                    )
                 );
             }
 
