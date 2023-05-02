@@ -3,11 +3,18 @@ package com.cashier.app.cashierApp.Helper;
 public class SpaceHelper {
     public static String spaceHelper(String itemName,Integer quantity, Integer price){
         String initialValue = itemName+quantity+price;
-        Integer spaces = 32-initialValue.length()-1;
-        String spacesString = "";
-        for(int i=0;i<spaces;i++){
-            spacesString+=" ";
+        //Integer spacesLeft = 32-initialValue.length()-9+4;
+        Integer spacesLeft = 23-initialValue.length()-String.valueOf(quantity).length() + 4;
+        //Integer spacesRight = 9 - String.valueOf(price).length();
+        Integer spacesRight = 32 - 23 - String.valueOf(price).length();
+        String spacesStringLeft = "";
+        String spacesStringRight = "";
+        for(int i=0;i<spacesLeft;i++){
+            spacesStringLeft+=" ";
         }
-        return itemName+spacesString+quantity+" "+price;
+        for(int i=0;i<spacesRight;i++){
+            spacesStringRight+=" ";
+        }
+        return itemName+spacesStringLeft+quantity+spacesStringRight+price;
     }
 }
