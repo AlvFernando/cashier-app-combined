@@ -538,6 +538,7 @@ const TableDataItem = ({
                               }}>
                               <section>
                                 {
+                                  dataUnitType &&
                                   dataUnitType.find(
                                     (e) => e.id === row.unitTypeId
                                   ).unitType

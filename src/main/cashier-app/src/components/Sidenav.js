@@ -7,6 +7,10 @@ import {
   History,
   Home,
   Key,
+  Logout,
+  LogoutRounded,
+  PowerOff,
+  PowerRounded,
   Print,
   Remove,
   Settings,
@@ -15,6 +19,8 @@ import {
 // Be sure to include styles at some point, probably during your bootstraping
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { linkApi } from "../service/linkApi";
 
 const Sidenav = ({ childToParent }) => {
   const [expand, setExpand] = useState(false);
@@ -31,7 +37,16 @@ const Sidenav = ({ childToParent }) => {
           className='sidenav'
           onSelect={(selected) => {
             // console.log("selected", selected);
-            navigate(selected);
+            if(selected !== "exit"){
+              navigate(selected);
+            }else{
+              // console.log("call /exit");
+              axios
+              .get(`${linkApi}exit`)
+              .then((res) => alert("you have already exit the application"))
+              .catch((err) => alert("error get /exit", err));
+            }
+            
           }}
           expanded={expand}
           onToggle={() => {
@@ -63,6 +78,12 @@ const Sidenav = ({ childToParent }) => {
                 <Key sx={{marginTop: "12px"}}/>
               </NavIcon>
               <NavText>Activate Product</NavText>
+            </NavItem>
+            <NavItem eventKey='exit' style={{position: "relative", top:"23em"}}>
+              <NavIcon>
+                <LogoutRounded sx={{marginTop: "12px"}}/>
+              </NavIcon>
+              <NavText>Exit</NavText>
             </NavItem>
           </SideNav.Nav>
         </SideNav>
