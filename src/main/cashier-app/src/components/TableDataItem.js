@@ -108,8 +108,8 @@ const TableDataItem = ({
 
   const handleEditItem = (e) => {
     e.preventDefault();
-    console.log("INI DATA UUID", dataToModalEdit.uuid);
-    console.log("INI inputItemName", inputItemName);
+    // console.log("INI DATA UUID", dataToModalEdit.uuid);
+    // console.log("INI inputItemName", inputItemName);
     axios
       .put(`${linkApi}api/item`, {
         uuid: dataToModalEdit.uuid,
@@ -119,7 +119,7 @@ const TableDataItem = ({
         unitTypeId: satuan,
       })
       .then((res) => {
-        console.log("Success Post Edited Item", res);
+        // console.log("Success Post Edited Item", res);
         handleClose();
       })
       .catch((err) => console.log("Error Post Edited Item", err));
@@ -136,7 +136,9 @@ const TableDataItem = ({
           unitTypeId: "",
         },
       })
-      .then(() => console.log("success delete item"))
+      .then(() => {
+        // console.log("success delete item")
+      })
       .catch((err) => console.log("error delete item", err));
   };
 
@@ -537,11 +539,13 @@ const TableDataItem = ({
                                 justifyContent: "space-between",
                               }}>
                               <section>
-                                {
-                                  dataUnitType &&
-                                  dataUnitType.find(
-                                    (e) => e.id === row.unitTypeId
-                                  ).unitType
+                                { dataUnitType.length > 0 
+                                  ?
+                                    dataUnitType.find(
+                                      (e) => e.id === row.unitTypeId
+                                    ).unitType
+                                  :
+                                  null
                                 }
                               </section>
                             </div>

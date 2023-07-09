@@ -19,7 +19,7 @@ function App() {
     axios
       .get(linkCheckProductKey)
       .then((res) => {
-        console.log("ini response link check product key", res);
+        // console.log("ini response link check product key", res);
         if (res.data.data.isActive === true) {
           setValid(true);
           navigate("/home");

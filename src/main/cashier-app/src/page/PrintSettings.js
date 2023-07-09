@@ -65,7 +65,7 @@ const PrintSettings = () => {
         printerName: inputUser.newPrinter,
       })
       .then((res) => {
-        console.log("success put new printer", res);
+        // console.log("success put new printer", res);
         setTrigger(!trigger);
       })
       .catch((err) => console.log("error put new printer", err));
@@ -77,7 +77,7 @@ const PrintSettings = () => {
         printerName: inputUser.printerUsed,
       })
       .then((res) => {
-        console.log("success put used printer", res);
+        // console.log("success put used printer", res);
         setTrigger(!trigger);
         alert(`printer ${inputUser.printerUsed} has been choosen`);
       })

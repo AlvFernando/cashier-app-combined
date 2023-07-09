@@ -7,12 +7,12 @@ const instance = axios.create();
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    console.log("masuk interceptors");
+    // console.log("masuk interceptors");
     axios
       .get(linkCheckProductKey)
       .then((res) => console.log("response firebase: ", res))
       .catch((err) => {
-        console.log("invalid product key", err);
+        // console.log("invalid product key", err);
         window.location.href = "/activation";
       });
     return config;

@@ -43,8 +43,14 @@ const Sidenav = ({ childToParent }) => {
               // console.log("call /exit");
               axios
               .get(`${linkApi}exit`)
-              .then((res) => alert("you have already exit the application"))
-              .catch((err) => alert("error get /exit", err));
+              .then((res) => {
+                alert("you have already exit the application");
+                window.close();
+              })
+              .catch((err) => {
+                window.close();
+                alert("you have already exit the application");
+              });
             }
             
           }}

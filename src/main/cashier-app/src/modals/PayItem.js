@@ -59,7 +59,7 @@ const PayItem = ({ dataTransaction, subtotal }) => {
         transactionDetail,
       })
       .then((res) => {
-        console.log("Success Post New Transaction", res);
+        // console.log("Success Post New Transaction", res);
         handleClose();
       })
       .catch((err) => console.log("Error Post New Transaction", err));
@@ -87,10 +87,12 @@ const PayItem = ({ dataTransaction, subtotal }) => {
     axios
       .post(`${linkApi}api/transaction`, dataTransactionToApi)
       .then((res) => {
-        console.log("Success Post New Transaction", res);
+        // console.log("Success Post New Transaction", res);
         axios
           .post(`${linkApi}api/printreceipt`, dataTransactionToApi)
-          .then((res) => console.log("success print transaction", res))
+          .then((res) => {
+            // console.log("success print transaction", res);
+          })
           .catch((err) => console.log("error print transaction", err));
         handleClose();
       })

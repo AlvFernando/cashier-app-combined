@@ -18,7 +18,7 @@ const Activation = () => {
   useEffect(() => {
     axios.get(`${linkApi}productkey/getproductid`).
     then((res) => {
-      console.log("response getproductid: ", res);
+      // console.log("response getproductid: ", res);
       if(res.data.data.isActive === true){
         setProductKey(res.data.data.productKey);
       }else{
@@ -35,7 +35,7 @@ const Activation = () => {
         productKey: inputUser,
       })
       .then((res) => {
-        console.log("success post activation key", res);
+        // console.log("success post activation key", res);
         navigate(0);
       })
       .catch((err) => console.log("failed post activation key", err));

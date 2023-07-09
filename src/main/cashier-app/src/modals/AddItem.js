@@ -26,19 +26,25 @@ const AddItem = ({ dataUnitType, trigger, setTrigger }) => {
 
   const handleAddItem = (e) => {
     e.preventDefault();
+    // const payment = parseInt(inputPay.replace(/\./g, ""), 10);
+    const adjustedItemPrice = parseInt(inputItemPrice.replace(/\./g, ""), 10);
     axios
       .post(`${linkApi}api/item`, {
         itemName: inputItemName,
-        itemPrice: inputItemPrice,
+        itemPrice: adjustedItemPrice,
         itemQty: inputItemQuantity,
         unitTypeId: satuan,
       })
       .then((res) => {
-        console.log("Success Post New Item", res);
+        // console.log("Success Post New Item", res);
+        setInputItemName("");
+        setInputItemQuantity("");
+        setInputItemPrice("");
         setTrigger(!trigger);
         handleClose();
       })
       .catch((err) => console.log("Error Post New Item", err));
+
   };
 
   const style = {
@@ -59,6 +65,11 @@ const AddItem = ({ dataUnitType, trigger, setTrigger }) => {
   const handleChange = (event) => {
     setSatuan(event.target.value);
   };
+
+  const addCommas = (num) =>
+    num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");
+
 
   return (
     <div>
@@ -93,7 +104,11 @@ const AddItem = ({ dataUnitType, trigger, setTrigger }) => {
                 <div>Harga Barang</div>
                 <TextField
                   value={inputItemPrice}
-                  onChange={(e) => setInputItemPrice(e.target.value)}
+                  onChange={(e) => {
+                    // setInputPay(addCommas(removeNonNumeric(e.target.value)))
+                    // setInputItemPrice(e.target.value)
+                    setInputItemPrice(addCommas(removeNonNumeric(e.target.value)));
+                  }}
                   size='small'
                 />
               </div>
