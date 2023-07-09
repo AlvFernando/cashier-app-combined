@@ -137,6 +137,8 @@ const TableDataItem = ({
         },
       })
       .then(() => {
+        setDataToModalEdit({});
+        setOpen(false);
         setTrigger(!trigger);
         // console.log("success delete item")
       })
