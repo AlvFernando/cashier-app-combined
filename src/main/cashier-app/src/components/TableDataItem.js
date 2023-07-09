@@ -137,6 +137,7 @@ const TableDataItem = ({
         },
       })
       .then(() => {
+        setTrigger(!trigger);
         // console.log("success delete item")
       })
       .catch((err) => console.log("error delete item", err));
