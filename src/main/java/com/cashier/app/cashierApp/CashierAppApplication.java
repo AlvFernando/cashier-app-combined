@@ -12,12 +12,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CashierAppApplication {
 
 	public static void main(String[] args) {
-		openHomePage();
+		
 		SpringApplication.run(CashierAppApplication.class, args);
+        openHomePage();
 		
 	}
 
     private static void openHomePage() {
+        System.setProperty("java.awt.headless", "false");
         try {
             URI homepage = new URI("http://localhost:8080/");
             Desktop.getDesktop().browse(homepage);
