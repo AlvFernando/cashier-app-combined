@@ -80,12 +80,13 @@ public class ProductKeyController {
     @PostMapping("/activation")
     public ResponseEntity<Object> addTransaction(@RequestBody ProductKey productKey){
         try {
+            String key = productKey.getProductKey();
             //non null string check || validation input check
-            if(productKey.getProductKey().isEmpty()){
+            if(key.isEmpty()){
                 return ResponseHandler.generateResponse("input productKey is null", HttpStatus.INTERNAL_SERVER_ERROR, null); 
             }
             //check if data exist
-            ProductKey data = productKeyService.getProductKey(productKey.getProductKey());
+            ProductKey data = productKeyService.getProductKey(key);
             if(data.equals(null)){
                 return ResponseHandler.generateResponse("Product key not valid", HttpStatus.INTERNAL_SERVER_ERROR, null);
             }
@@ -97,7 +98,7 @@ public class ProductKeyController {
                 productKeyRepository.save(localData);
 
                 //update key to firebase
-                productKeyService.update(true, productKey.getProductKey());
+                productKeyService.update(true, key);
             }else{
                 return ResponseHandler.generateResponse("Product key already used", HttpStatus.OK, null);
             }
