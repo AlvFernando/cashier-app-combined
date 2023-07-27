@@ -43,6 +43,10 @@ function App() {
     }
   };
 
+  useEffect(()=>{
+    document.title='Cashier App'
+  },[])
+
   return (
     <>
           {valid === true ? (
