@@ -85,7 +85,7 @@ const Sidenav = ({ childToParent }) => {
               </NavIcon>
               <NavText>Activate Product</NavText>
             </NavItem>
-            <NavItem eventKey='exit' style={{position: "relative", top:"23em"}}>
+            <NavItem eventKey='exit' style={{position: "absolute", bottom:"10px"}}>
               <NavIcon>
                 <LogoutRounded sx={{marginTop: "12px"}}/>
               </NavIcon>

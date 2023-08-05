@@ -17,15 +17,15 @@ const Activation = () => {
 
   useEffect(() => {
     axios.get(`${linkApi}productkey/getproductid`).
-    then((res) => {
-      // console.log("response getproductid: ", res);
-      if(res.data.data.isActive === true){
-        setProductKey(res.data.data.productKey);
-      }else{
-        alert("Product key invalid");
-      }
-    }).
-    catch((err) => console.log("error getproductid", err));
+      then((res) => {
+        // console.log("response getproductid: ", res);
+        if (res.data.data.isActive === true) {
+          setProductKey(res.data.data.productKey);
+        } else {
+          alert("Product key invalid");
+        }
+      }).
+      catch((err) => console.log("error getproductid", err));
   }, [])
 
   const handleActivate = () => {
@@ -40,6 +40,13 @@ const Activation = () => {
       })
       .catch((err) => console.log("failed post activation key", err));
   };
+
+  const handleCloseApp = () => {
+    axios
+      .get(`${linkApi}exit`)
+      .then((res) => console.log("response /exit", res))
+      .catch((err) => alert(`error exit app with message: ${err}`))
+  }
 
   return (
     <div
@@ -62,30 +69,40 @@ const Activation = () => {
           sx={{ mb: 7 }}
           className='flex-row'
           style={{ justifyContent: "center" }}>
-          ACTIVATE YOUR PRODUCT
+          {
+            productKey.length > 0
+              ?
+              <>
+                YOUR PRODUCT HAS BEEN ACTIVATED
+              </>
+              :
+              <>
+                ACTIVATE YOUR PRODUCT
+              </>
+          }
         </Typography>
         <div
           className='flex-row'
           style={{ justifyContent: "center", marginBottom: "30px" }}>
           {
-            productKey.length > 0 
-            ?
-            <>
-              <Typography variant="h7" sx={{width: "80%", textAlign:"center"}}>
-                {productKey}
-              </Typography>
-            </>
-            :
-            <>
-              <TextField
-              id='outlined-basic'
-              label='please input your key here'
-              variant='outlined'
-              sx={{ width: "80%" }}
-              value={inputUser}
-              onChange={(e) => setInputUser(e.target.value)}
-            />
-            </>
+            productKey.length > 0
+              ?
+              <>
+                <Typography variant="h7" sx={{ width: "80%", textAlign: "center" }}>
+                  {productKey}
+                </Typography>
+              </>
+              :
+              <>
+                <TextField
+                  id='outlined-basic'
+                  label='please input your key here'
+                  variant='outlined'
+                  sx={{ width: "80%" }}
+                  value={inputUser}
+                  onChange={(e) => setInputUser(e.target.value)}
+                />
+              </>
           }
         </div>
         <Spinner loading={loading} />
@@ -98,6 +115,17 @@ const Activation = () => {
             SUBMIT
           </Button>
         </div>
+        {
+          productKey.length <= 0 &&
+          <div className='flex-row' style={{ justifyContent: "center", marginTop: "20px" }}>
+            <Button
+              sx={{ width: "80%" }}
+              variant='contained'
+              onClick={handleCloseApp}>
+              CLOSE APPLICATION
+            </Button>
+          </div>
+        }
       </Paper>
     </div>
   );

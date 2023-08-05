@@ -553,7 +553,7 @@ const TableDataItem = ({
                               </section>
                             </div>
                           </TableCell>
-                          <TableCell align='left'>
+                          <TableCell align='left' sx={{ minWidth: "160px" }}>
                             <IconButton
                               color='primary'
                               aria-label='upload picture'
